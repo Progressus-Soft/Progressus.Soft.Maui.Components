@@ -16,6 +16,14 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<Title>Progressus Soft Maui Components</Title>
+		<Authors>dionnisnavarro</Authors>
+		<Company>Prgressus Soft</Company>
+		<Description>A set of custom components for .Net MAUI</Description>
+		<PackageProjectUrl>https://github.com/Progressus-Soft/Progressus.Soft.Maui.Components</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/Progressus-Soft/Progressus.Soft.Maui.Components</RepositoryUrl>
+		<PackageTags>.Net Maui;Component;Border;MAUI Components</PackageTags>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -40,6 +48,13 @@
 
 	<ItemGroup>
 	  <Folder Include="Extensions\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 
 	<ItemGroup>
