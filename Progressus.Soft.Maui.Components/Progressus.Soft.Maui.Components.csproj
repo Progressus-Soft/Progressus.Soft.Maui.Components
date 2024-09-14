@@ -27,10 +27,28 @@
 	  <MauiXaml Update="Alert\Alert.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Border\BorderItem.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="CustomIndicator\BorderedActivityIndicator.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="RoundedImage\BorderedImage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Folder Include="Extensions\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="CustomIndicator\BorderedActivityIndicator.xaml.cs">
+	    <DependentUpon>BorderedActivityIndicator.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="RoundedImage\BorderedImage.xaml.cs">
+	    <DependentUpon>BorderedImage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 </Project>
