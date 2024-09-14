@@ -3,6 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:fa="clr-namespace:FontAwesome"
              x:Class="Progressus.Soft.Maui.Components.Alert" x:Name="this">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            
+        </ResourceDictionary>
+    </ContentView.Resources>
     <Grid>
         <Frame CornerRadius="5" 
                HasShadow="False" 
