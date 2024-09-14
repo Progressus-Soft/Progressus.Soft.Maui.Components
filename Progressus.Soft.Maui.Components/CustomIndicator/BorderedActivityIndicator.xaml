@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<components:BorderItem 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:components="clr-namespace:Progressus.Soft.Maui.Components"
+    x:Class="Progressus.Soft.Maui.Components.BorderedActivityIndicator"
+    x:Name="self"
+    Padding="1"
+    ShapeCornerRadius="50">
+    <ActivityIndicator
+        Color="{AppThemeBinding Dark={StaticResource PrimaryDark},Light={StaticResource Primary}}" 
+        IsRunning="{Binding Source={x:Reference self}, Path=IsRunning}" 
+        HorizontalOptions="FillAndExpand" 
+        VerticalOptions="FillAndExpand"/>
+
+</components:BorderItem>
