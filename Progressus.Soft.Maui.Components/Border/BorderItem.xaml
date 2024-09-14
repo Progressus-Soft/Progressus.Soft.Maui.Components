@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Border xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Progressus.Soft.Maui.Components.BorderItem"
+    x:Name="this"
+    Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+    BackgroundColor="{AppThemeBinding Light={StaticResource LightItem}, Dark={StaticResource DarkItem}}"
+    StrokeThickness="1"
+    Margin="10">
+    <Border.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Primary">#00717b</Color>
+            <Color x:Key="PrimaryDark">#5aadf4</Color>
+            <Color x:Key="LightItem">#edf2f8</Color>
+            <Color x:Key="DarkItem">#383838</Color>
+        </ResourceDictionary>
+    </Border.Resources>
+    <Border.StrokeShape>
+        <RoundRectangle CornerRadius="{Binding Source={x:Reference this}, Path=ShapeCornerRadius}" />
+    </Border.StrokeShape>
+</Border>
