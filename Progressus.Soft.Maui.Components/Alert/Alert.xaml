@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:fa="clr-namespace:FontAwesome"
+             x:Class="Progressus.Soft.Maui.Components.Alert" x:Name="this">
+    <Grid>
+        <Frame CornerRadius="5" 
+               HasShadow="False" 
+               Padding="0" 
+               BackgroundColor="{Binding Source={x:Reference this}, Path=Color}">
+            <Grid Padding="10" RowDefinitions="Auto,Auto,Auto">
+                <Label FontAttributes="Bold" Text="{Binding Source={x:Reference this}, Path=Title}" HorizontalOptions="CenterAndExpand" VerticalOptions="Start"/>
+                <Label Grid.Row="1" Text="{Binding Source={x:Reference this}, Path=Message}" VerticalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                <StackLayout Orientation="Horizontal" Grid.Row="2" Padding="10" Spacing="5">
+                    <Button IsVisible="{Binding Source={x:Reference this}, Path=DisplayRefreshButton}" 
+                         Command="{Binding Source={x:Reference this}, Path=RefreshCommand}"  
+                            BorderColor="Transparent" 
+                            Text="Reintentar" CornerRadius="5"
+                            BackgroundColor="#0dcaf0"
+                            HorizontalOptions="FillAndExpand"/>
+                    <Button HorizontalOptions="FillAndExpand" 
+                            CornerRadius="5" Text="Cerrar" 
+                            Command="{Binding Source={x:Reference this}, Path=ClosingCommand}"  
+                            BackgroundColor="Transparent" 
+                            BorderColor="#0dcaf0" 
+                            BorderWidth="1"
+                            Clicked="CloseButton_Clicked"/>
+                </StackLayout>
+            </Grid>
+        </Frame>
+    </Grid>
+</ContentView>

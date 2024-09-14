@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Progressus.Soft.Maui.Components", "Progressus.Soft.Maui.Components\Progressus.Soft.Maui.Components.csproj", "{28AC26AF-2074-40F6-9740-971FFC6F7DDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Progressus.Soft.Maui.Components", "Progressus.Soft.Maui.Components\Progressus.Soft.Maui.Components.csproj", "{28AC26AF-2074-40F6-9740-971FFC6F7DDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingApp", "TestingApp\TestingApp.csproj", "{7389F3E8-508A-4146-8180-BD1B66E3C7AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,12 @@ Global
 		{28AC26AF-2074-40F6-9740-971FFC6F7DDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28AC26AF-2074-40F6-9740-971FFC6F7DDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28AC26AF-2074-40F6-9740-971FFC6F7DDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7389F3E8-508A-4146-8180-BD1B66E3C7AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7389F3E8-508A-4146-8180-BD1B66E3C7AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7389F3E8-508A-4146-8180-BD1B66E3C7AB}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{7389F3E8-508A-4146-8180-BD1B66E3C7AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7389F3E8-508A-4146-8180-BD1B66E3C7AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7389F3E8-508A-4146-8180-BD1B66E3C7AB}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
