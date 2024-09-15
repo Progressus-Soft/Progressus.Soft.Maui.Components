@@ -20,11 +20,11 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
-    - name: Restore workloads
-      run: dotnet workload restore
-    - name: Restore dependencies
-      run: dotnet restore
+    #- name: Restore workloads
+    #  run: dotnet workload restore
+    - name: Restore dependencies 
+      run: dotnet restore Progressus.Soft.Maui.Components\Progressus.Soft.Maui.Components.csproj
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore Progressus.Soft.Maui.Components\Progressus.Soft.Maui.Components.csproj
     #- name: Test
     #  run: dotnet test --no-build --verbosity normal
