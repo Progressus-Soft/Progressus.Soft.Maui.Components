@@ -21,9 +21,9 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore workloads
-      run: dotnet workload restore **/*Maui.Components.csproj
+      run: dotnet workload restore *Maui.Components.csproj
     - name: Restore dependencies
-      run: dotnet restore **/*Maui.Components.csproj
+      run: dotnet restore *Maui.Components.csproj
     - name: Build
       run: dotnet build --no-restore **/*Maui.Components.csproj
     #- name: Test
