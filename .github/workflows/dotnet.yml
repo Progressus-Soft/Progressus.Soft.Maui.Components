@@ -21,10 +21,10 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore workloads
-      run: dotnet workload restore *Maui.Components.csproj
+      run: dotnet workload restore
     - name: Restore dependencies
-      run: dotnet restore *Maui.Components.csproj
+      run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore **/*Maui.Components.csproj
+      run: dotnet build --no-restore
     #- name: Test
     #  run: dotnet test --no-build --verbosity normal
