@@ -26,7 +26,7 @@
 		<PackageTags>.Net Maui;Component;Border;MAUI Components</PackageTags>
     <!-- Package validation -->
     <EnablePackageValidation>true</EnablePackageValidation>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <!--<GenerateDocumentationFile>True</GenerateDocumentationFile>-->
 
     <!-- If all members are not documented, you can disable the compiler warnings -->
     <NoWarn>$(NoWarn);CS1591</NoWarn>
