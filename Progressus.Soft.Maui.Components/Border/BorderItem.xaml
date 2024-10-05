@@ -5,8 +5,7 @@
     x:Name="this"
     Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
     BackgroundColor="{AppThemeBinding Light={StaticResource LightItem}, Dark={StaticResource DarkItem}}"
-    StrokeThickness="1"
-    Margin="10">
+    StrokeThickness="1">
     <Border.Resources>
         <ResourceDictionary>
             <Color x:Key="Primary">#00717b</Color>

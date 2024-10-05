@@ -37,6 +37,12 @@ public partial class Alert : ContentView, INotifyPropertyChanged
         returnType: typeof(bool),
         declaringType: typeof(Alert),
         defaultValue: false);
+    public static readonly BindableProperty DisplayCloseButtonProperty =
+    BindableProperty.Create(
+        propertyName: nameof(DisplayCloseButton),
+        returnType: typeof(bool),
+        declaringType: typeof(Alert),
+        defaultValue: true);
     public static readonly BindableProperty AlertTypeProperty =
     BindableProperty.Create(
         propertyName: nameof(AlertType),
@@ -70,6 +76,11 @@ public partial class Alert : ContentView, INotifyPropertyChanged
     {
         get => (bool)GetValue(DisplayRefreshButtonProperty);
         set => SetValue(DisplayRefreshButtonProperty, value);
+    }
+    public bool DisplayCloseButton
+    {
+        get => (bool)GetValue(DisplayCloseButtonProperty);
+        set => SetValue(DisplayCloseButtonProperty, value);
     }
 
     public AlertType AlertType
