@@ -80,6 +80,18 @@ public partial class Form : ContentView, INotifyPropertyChanged
         defaultValue: true,
         declaringType: typeof(Form));
 
+    public static readonly BindableProperty TitleProperty =
+    BindableProperty.Create(
+        propertyName: nameof(Title),
+        returnType: typeof(string),
+        declaringType: typeof(Form));
+
+    public string Title
+    {
+        get => (string)GetValue(TitleProperty);
+        set => SetValue(TitleProperty, value);
+    }
+
     private BorderItem ValidationSummary = new BorderItem()
     {
         ShapeCornerRadius = 10,
@@ -156,8 +168,9 @@ public partial class Form : ContentView, INotifyPropertyChanged
         set { SetProperty(ref _button, value); }
     }
 
-    private StackLayout baseLayout;
-    private StackLayout mainLayout;
+    protected StackLayout baseLayout;
+    protected StackLayout mainLayout;
+    protected Grid ButtonsContainer;
 
     bool _isValid;
     public bool IsValid
@@ -346,6 +359,16 @@ public partial class Form : ContentView, INotifyPropertyChanged
 	{
         InitializeComponent();
 
+        ButtonsContainer = new()
+        {
+            HorizontalOptions = LayoutOptions.EndAndExpand,
+            ColumnDefinitions = new()
+            {
+                new ColumnDefinition(GridLength.Auto),
+                new ColumnDefinition(GridLength.Auto)
+            }
+        };
+
         SubmitButton.Clicked += SubmitButton_Clicked;
         SubmitButton.Clicked += (sender, args) =>
 
@@ -423,7 +446,11 @@ public partial class Form : ContentView, INotifyPropertyChanged
                         }
                     }
                 baseLayout.Add(mainLayout);
-                baseLayout.Add(SubmitButton);
+                
+                ButtonsContainer.Add(SubmitButton);
+                
+                baseLayout.Add(ButtonsContainer);
+                //baseLayout.Add(PrevButton);
                 Content ??= baseLayout;
             }
         }
@@ -435,6 +462,19 @@ public partial class Form : ContentView, INotifyPropertyChanged
     private void ContentView_Loaded(object sender, EventArgs e)
     {
         baseLayout = new() { Spacing = 5 };
+        
+        //Set title
+        if (!string.IsNullOrEmpty(Title))
+        {
+            Label title = new();
+            title.SetBinding(Label.TextProperty, new Binding(nameof(Title), source: this));
+            BoxView boxView = new BoxView() { HeightRequest = 1, BackgroundColor = Color.Parse("#6E6E6E") };
+            VerticalStackLayout titleLayout = new VerticalStackLayout();
+            titleLayout.Add(title);
+            titleLayout.Add(boxView);
+            baseLayout.Add(titleLayout);
+        }
+        
         mainLayout = new() { Spacing = 5 };
         ConfigureFormFields();
     }
