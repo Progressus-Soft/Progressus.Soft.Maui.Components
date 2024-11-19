@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using TestingApp.Flyout;
 
 namespace TestingApp
 {
@@ -14,6 +15,7 @@ namespace TestingApp
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+            builder.Services.AddSingleton<FlyoutSidePage>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

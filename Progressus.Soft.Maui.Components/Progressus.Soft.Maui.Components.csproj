@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
@@ -39,10 +39,20 @@
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-    <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)"/>
+    <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 	</ItemGroup>
+  
+  <ItemGroup>
+    <!-- Images -->
+    <MauiImage Include="$(MSBuildThisFileDirectory)\Resources\Images\*" Pack="True" />
+    <!-- Custom Fonts -->
+    <MauiFont Include="Resources\Fonts\*" />
 
-	<ItemGroup>
+    <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+    <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+  
+  <ItemGroup>
 	  <MauiXaml Update="Alert\Alert.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -65,6 +75,7 @@
 
 	<ItemGroup>
 	  <Folder Include="Extensions\" />
+	  <Folder Include="Resources\Fonts\" />
 	</ItemGroup>
 
 	<ItemGroup>

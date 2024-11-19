@@ -12,6 +12,7 @@ public class FormField
     public Type Type { get; set; }
     public Label Label { get; set; }
     public ErrorLabel ErrorLabel { get; set; }
+    public ErrorImage ErrorImage { get; set; }
     public View Input { get; set; }
     public FieldStatus FieldStatus { get; set; }
 }

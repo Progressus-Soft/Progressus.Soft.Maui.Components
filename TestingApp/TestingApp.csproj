@@ -66,4 +66,10 @@
 	  <ProjectReference Include="..\Progressus.Soft.Maui.Components\Progressus.Soft.Maui.Components.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="Flyout\FlyoutSidePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

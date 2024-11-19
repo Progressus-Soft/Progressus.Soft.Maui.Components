@@ -407,6 +407,15 @@ public partial class Form : ContentView, INotifyPropertyChanged
                             Name = property.Name,
                             Label = new Label() { Text = GetPropertyDisplayName(property), IsVisible = DisplayLabels },
                             ErrorLabel = new ErrorLabel() { FontSize = 10, Name = $"{sourceType.Name}_{property.Name}Error" },
+                            ErrorImage = new ()
+                            {
+                                Source = "ic_error_outline_white_48dp.png",
+                                VerticalOptions = LayoutOptions.Center,
+                                HorizontalOptions = LayoutOptions.End,
+                                HeightRequest = 20,
+                                WidthRequest = 20,
+                                Name = $"Image{sourceType.Name}_{property.Name}Error"
+                            },
                             Input = GetViewByDataType(property)
                         };
 
@@ -440,8 +449,21 @@ public partial class Form : ContentView, INotifyPropertyChanged
                         //Add elements to container layout
                         if (field.FieldStatus == FieldStatus.Default || field.FieldStatus == FieldStatus.IgnoreValidation)
                         {
+                            //Configure entry validation area
+                            Grid entryContainer = new ();
+
+                            entryContainer.Add(field.Input);
+                            entryContainer.Add(field.ErrorImage);
+
+                            BorderItem entryBorder = new() 
+                            { 
+                                ShapeCornerRadius = 5,
+                                Stroke = Color.Parse("Transparent")
+                            };
+                            entryBorder.Content = entryContainer;
                             mainLayout.Add(field.Label);
-                            mainLayout.Add(field.Input);
+                            //mainLayout.Add(field.Input);
+                            mainLayout.Add(entryBorder);
                             mainLayout.Add(field.ErrorLabel);
                         }
                     }
@@ -539,6 +561,15 @@ public partial class Form : ContentView, INotifyPropertyChanged
         onChanged?.Invoke();
         OnPropertyChanged(propertyName);
         return true;
+    }
+}
+
+public class ErrorImage: Image
+{
+    public string Name { get; set; }
+    public ErrorImage()
+    {
+        IsVisible = false;
     }
 }
 

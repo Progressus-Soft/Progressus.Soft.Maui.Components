@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Progressus.Soft.Maui.Components.Validation;
 
@@ -42,6 +43,21 @@ public static class FormValidation
         {
             var errorControlName =
             $"{propertyName.Replace(".", "_")}{validationLabelSuffix}";
+
+            var imageControlName =
+            $"Image{propertyName.Replace(".", "_")}{validationLabelSuffix}";
+
+            //Error Image
+            var errorBorderItem = page.Children.Where(c => c is BorderItem).FirstOrDefault(b => (b as BorderItem)?.Content is Grid && ((b as BorderItem).Content as Grid).Children.Any(c => c is ErrorImage && (c as ErrorImage).Name == imageControlName));
+
+            if (errorBorderItem != null)
+            {
+                var errorImage = ((errorBorderItem as BorderItem)?.Content as Grid)?.FirstOrDefault(c => c is ErrorImage && (c as ErrorImage).Name == imageControlName);
+                if (errorImage != null && errorImage is ErrorImage) (errorImage as ErrorImage).IsVisible = false;
+                (errorBorderItem as BorderItem).Stroke = Color.Parse("Transparent");
+            }
+
+
             var errorLabels = page.Children.Where(x => x is ErrorLabel);
             if (errorLabels.Any())
             {
@@ -58,12 +74,30 @@ public static class FormValidation
     object model, Layout page, string validationLabelSuffix = "Error")
     {
         if (model == null) { return; }
+
         foreach (var error in errors)
         {
             var memberName = $"{model.GetType().Name}_{error.MemberNames.FirstOrDefault()}";
             memberName = memberName.Replace(".", "_");
             var errorControlName = $"{memberName}{validationLabelSuffix}";
-            var frameErrorControlName = $"{errorControlName}Frame";
+            var imageControlName = $"Image{memberName}{validationLabelSuffix}";
+
+            //Error Image
+            var errorBorderItem = page.Children.Where(c => c is BorderItem).FirstOrDefault(b => (b as BorderItem)?.Content is Grid && ((b as BorderItem).Content as Grid).Children.Any(c => c is ErrorImage && (c as ErrorImage).Name == imageControlName));
+
+            if(errorBorderItem != null)
+            {
+                var errorImage = ((errorBorderItem as BorderItem)?.Content as Grid)?.FirstOrDefault(c => c is ErrorImage && (c as ErrorImage).Name == imageControlName);
+                if (errorImage != null && errorImage is ErrorImage)
+                {
+                    (errorImage as ErrorImage).IsVisible = true;
+                    ToolTipProperties.SetText((errorImage as ErrorImage), error);
+                }
+                (errorBorderItem as BorderItem).Stroke = Color.Parse("#ff4c4b");
+            }
+
+
+            //Error Label
             var errorLabels = page.Children.Where(x => x is ErrorLabel);
             if (errorLabels.Any())
             {
