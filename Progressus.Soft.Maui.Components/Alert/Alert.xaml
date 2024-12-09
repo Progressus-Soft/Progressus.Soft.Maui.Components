@@ -29,6 +29,7 @@
                             BackgroundColor="Transparent" 
                             BorderColor="#0dcaf0" 
                             BorderWidth="1"
+                            IsVisible="{Binding Source={x:Reference this}, Path=Dismissible}"
                             Clicked="CloseButton_Clicked"/>
                 </StackLayout>
             </Grid>

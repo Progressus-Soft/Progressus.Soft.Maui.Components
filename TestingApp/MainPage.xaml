@@ -23,7 +23,9 @@
 
             <Label Text="Alert"/>
             <components:Alert Title="Info" Message="Alert type Success" DisplayRefreshButton="True" AlertType="Success"/>
-            
+            <Label Text="Non dismissible Alert"/>
+            <components:Alert Title="Warning" Message="Not dismissible Alert" Dismissible="False" AlertType="Warning"/>
+
             <Label Text="Bordered Item"/>
             <components:BorderItem HeightRequest="100" ShapeCornerRadius="20"/>
 

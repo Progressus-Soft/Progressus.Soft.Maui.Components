@@ -50,6 +50,17 @@ public partial class Alert : ContentView, INotifyPropertyChanged
         declaringType: typeof(Alert),
         defaultValue: AlertType.Danger,
         propertyChanged: OnAlertTypeChanged);
+    public static readonly BindableProperty DismissibleProperty =
+    BindableProperty.Create(
+        propertyName: nameof(Dismissible),
+        returnType: typeof(bool),
+        declaringType: typeof(Alert),
+        defaultValue: true);
+    public bool Dismissible
+    {
+        get => (bool)GetValue(DismissibleProperty);
+        set => SetValue(DismissibleProperty, value);
+    }
     public string Title
     {
         get => (string)GetValue(TitleProperty);
