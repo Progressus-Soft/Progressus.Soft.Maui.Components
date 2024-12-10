@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Progressus.Soft.Maui.Components;
 
-public class FormField
+public class FormField: View
 {
     public string Name { get; set; }
     public Type Type { get; set; }
@@ -15,6 +15,7 @@ public class FormField
     public ErrorImage ErrorImage { get; set; }
     public View Input { get; set; }
     public FieldStatus FieldStatus { get; set; }
+    public bool IsCustomField { get; set; } = false;
 }
 
 public enum FieldStatus

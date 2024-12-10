@@ -47,8 +47,12 @@ public static class FormValidation
             var imageControlName =
             $"Image{propertyName.Replace(".", "_")}{validationLabelSuffix}";
 
-            //Error Image
-            var errorBorderItem = page.Children.Where(c => c is BorderItem).FirstOrDefault(b => (b as BorderItem)?.Content is Grid && ((b as BorderItem).Content as Grid).Children.Any(c => c is ErrorImage && (c as ErrorImage).Name == imageControlName));
+            //Colored border
+            var errorBorderItem = page.Children
+                .Where(s => s is StackLayout)
+                .SelectMany(s => (s as StackLayout)!.Children)
+                .Where(c => c is BorderItem)
+                .FirstOrDefault(c => ((c as BorderItem)!.Content as Grid)!.Children.Any(cc => cc is ErrorImage && (cc as ErrorImage).Name == imageControlName));
 
             if (errorBorderItem != null)
             {
@@ -58,14 +62,15 @@ public static class FormValidation
             }
 
 
-            var errorLabels = page.Children.Where(x => x is ErrorLabel);
-            if (errorLabels.Any())
+            //Error Label
+            var errorLabel = page.Children
+                .Where(s => s is StackLayout)
+                .SelectMany(s => (s as StackLayout).Children)
+                .Where(c => c is ErrorLabel)
+                .FirstOrDefault(l => (l as ErrorLabel).Name == errorControlName);
+            if (errorLabel != null)
             {
-                var control = errorLabels.FirstOrDefault(l => (l as ErrorLabel).Name == errorControlName);
-                if (control != null)
-                {
-                    (control as ErrorLabel).IsVisible = false;
-                }
+                (errorLabel as ErrorLabel).IsVisible = false;
             }
         }
     }
@@ -82,31 +87,34 @@ public static class FormValidation
             var errorControlName = $"{memberName}{validationLabelSuffix}";
             var imageControlName = $"Image{memberName}{validationLabelSuffix}";
 
-            //Error Image
-            var errorBorderItem = page.Children.Where(c => c is BorderItem).FirstOrDefault(b => (b as BorderItem)?.Content is Grid && ((b as BorderItem).Content as Grid).Children.Any(c => c is ErrorImage && (c as ErrorImage).Name == imageControlName));
+            //Colored border
+            var errorBorderItem = page.Children
+                .Where(s => s is StackLayout)
+                .SelectMany(s => (s as StackLayout)!.Children)
+                .Where(c => c is BorderItem)
+                .FirstOrDefault(c => ((c as BorderItem)!.Content as Grid)!.Children.Any(cc => cc is ErrorImage && (cc as ErrorImage).Name == imageControlName));
 
-            if(errorBorderItem != null)
+            if (errorBorderItem != null)
             {
                 var errorImage = ((errorBorderItem as BorderItem)?.Content as Grid)?.FirstOrDefault(c => c is ErrorImage && (c as ErrorImage).Name == imageControlName);
                 if (errorImage != null && errorImage is ErrorImage)
                 {
-                    (errorImage as ErrorImage).IsVisible = true;
-                    ToolTipProperties.SetText((errorImage as ErrorImage), error);
+                    (errorImage as ErrorImage)!.IsVisible = true;
+                    ToolTipProperties.SetText((errorImage as ErrorImage)!, error);
                 }
-                (errorBorderItem as BorderItem).Stroke = Color.Parse("#ff4c4b");
+                (errorBorderItem as BorderItem)!.Stroke = Color.Parse("#ff4c4b");
             }
 
-
             //Error Label
-            var errorLabels = page.Children.Where(x => x is ErrorLabel);
-            if (errorLabels.Any())
+            var errorLabel = page.Children
+                .Where(s => s is StackLayout)
+                .SelectMany(s => (s as StackLayout).Children)
+                .Where(c => c is ErrorLabel)
+                .FirstOrDefault(l => (l as ErrorLabel).Name == errorControlName);
+            if (errorLabel != null)
             {
-                var control = errorLabels.FirstOrDefault(l => (l as ErrorLabel).Name == errorControlName);
-                if (control != null)
-                {
-                    (control as ErrorLabel).Text = $"{error.ErrorMessage}{Environment.NewLine}";
-                    (control as ErrorLabel).IsVisible = true;
-                }
+                (errorLabel as ErrorLabel).Text = $"{error.ErrorMessage}{Environment.NewLine}";
+                (errorLabel as ErrorLabel).IsVisible = true;
             }
         }
     }

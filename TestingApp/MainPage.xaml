@@ -37,7 +37,21 @@
 
             <Label Text="Form with validation"/>
             <components:BorderItem Padding="10" ShapeCornerRadius="5">
-                <components:Form Title="Form" SourceType="{x:Type models:FormModel}" DisplayLabels="True" DisplayPlaceholders="True" DisplayValidationSummary="True"/>
+                <components:Form Title="Form" SourceType="{x:Type models:FormModel}" DisplayLabels="True" DisplayPlaceholders="True" DisplayValidationSummary="False"/>
+            </components:BorderItem>
+
+            <Label Text="Form with fields"/>
+            <components:BorderItem Padding="10" ShapeCornerRadius="5">
+                <components:Form Title="Form" 
+                                 SourceType="{x:Type models:ThirdFormModel}" 
+                                 DisplayLabels="True" DisplayPlaceholders="True" 
+                                 DisplayValidationSummary="True" ColumnDefinitions="*,*">
+
+                    <components:Form.Fields>
+                        <components:FormField Name="Field" Grid.Column="1"/>
+                        <components:FormField Name="Field2" Grid.Row="0"/>
+                    </components:Form.Fields>
+                </components:Form>
             </components:BorderItem>
 
             <Label Text="Multi step form"/>

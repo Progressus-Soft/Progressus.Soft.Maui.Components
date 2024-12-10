@@ -86,6 +86,31 @@ public partial class Form : ContentView, INotifyPropertyChanged
         returnType: typeof(string),
         declaringType: typeof(Form));
 
+    public static readonly BindableProperty ColumnDefinitionsProperty =
+    BindableProperty.Create(
+        propertyName: nameof(ColumnDefinitions),
+        returnType: typeof(ColumnDefinitionCollection),
+        declaringType: typeof(Form));
+
+    public static readonly BindableProperty RowDefinitionsProperty =
+    BindableProperty.Create(
+        propertyName: nameof(RowDefinitions),
+        returnType: typeof(RowDefinitionCollection),
+        declaringType: typeof(Form));
+
+    [TypeConverter(typeof(RowDefinitionCollectionTypeConverter))]
+    public RowDefinitionCollection RowDefinitions
+    {
+        get { return (RowDefinitionCollection)GetValue(RowDefinitionsProperty); }
+        set { SetValue(RowDefinitionsProperty, value); }
+    }
+
+    [TypeConverter(typeof(ColumnDefinitionCollectionTypeConverter))]
+    public ColumnDefinitionCollection ColumnDefinitions
+    {
+        get { return (ColumnDefinitionCollection)GetValue(ColumnDefinitionsProperty); }
+        set { SetValue(ColumnDefinitionsProperty, value); }
+    }
     public string Title
     {
         get => (string)GetValue(TitleProperty);
@@ -169,7 +194,7 @@ public partial class Form : ContentView, INotifyPropertyChanged
     }
 
     protected StackLayout baseLayout;
-    protected StackLayout mainLayout;
+    protected Grid mainLayout;
     protected Grid ButtonsContainer;
 
     bool _isValid;
@@ -231,7 +256,7 @@ public partial class Form : ContentView, INotifyPropertyChanged
         //find display attr
         if (attrs != null && attrs.Any())
         {
-            var displayAttribute = attrs.FirstOrDefault(a => a.AttributeType.Name == "DisplayAttribute");
+            var displayAttribute = attrs.FirstOrDefault(a => a.AttributeType.Name == nameof(DisplayAttribute));
             if (displayAttribute != null)
             {
                 result = displayAttribute.NamedArguments.FirstOrDefault(a => a.MemberName == "Name").TypedValue.Value.ToString();
@@ -390,7 +415,7 @@ public partial class Form : ContentView, INotifyPropertyChanged
             //Create instance of source type
             var sourceType = SourceType;
             
-            //Layputs
+            //Layouts
             
             if (sourceType != null)
             {
@@ -400,14 +425,27 @@ public partial class Form : ContentView, INotifyPropertyChanged
                 SubmitButton.CommandParameter = Instance;
 
                 if (properties != null && properties.Any())
+                {
+                    RowDefinition[] rowDefinitions = new RowDefinition[properties.Length + 1];
+                    
                     foreach (var property in properties)
                     {
+                        //Get property index
+                        var index = properties.ToList().IndexOf(property);
+                        //Init each grid row
+                        rowDefinitions[index] = new RowDefinition(GridLength.Auto);
+
+                        //Init the last grid row
+                        if(index + 1 == properties.Length)
+                            rowDefinitions[index + 1] = new RowDefinition(GridLength.Auto);
+
+                        //CReate a form field based on the current property
                         var field = new FormField
                         {
                             Name = property.Name,
                             Label = new Label() { Text = GetPropertyDisplayName(property), IsVisible = DisplayLabels },
                             ErrorLabel = new ErrorLabel() { FontSize = 10, Name = $"{sourceType.Name}_{property.Name}Error" },
-                            ErrorImage = new ()
+                            ErrorImage = new()
                             {
                                 Source = "ic_error_outline_white_48dp.png",
                                 VerticalOptions = LayoutOptions.Center,
@@ -418,14 +456,18 @@ public partial class Form : ContentView, INotifyPropertyChanged
                             },
                             Input = GetViewByDataType(property)
                         };
-
+                        
+                        //Configure Input placeholder
                         if (field.Input is InputView && !DisplayPlaceholders)
-                            (field.Input as InputView).Placeholder = string.Empty;
+                            (field.Input as InputView)!.Placeholder = string.Empty;
 
                         //Override form fields with used defined custom fields
-                        if (Fields.Any(f => f.Name == field.Name && (f.Type != null && f.Type == sourceType)))
+                        if (Fields.Any(f => f.Name == field.Name))
                         {
                             var userField = Fields.FirstOrDefault(f => f.Name == field.Name);
+                            Grid.SetColumn(field, Grid.GetColumn(userField));
+                            Grid.SetRow(field, Grid.GetRow(userField));
+                            field.IsCustomField = true;
                             if (userField.Label != null)
                             {
                                 field.Label = userField.Label;
@@ -450,29 +492,43 @@ public partial class Form : ContentView, INotifyPropertyChanged
                         if (field.FieldStatus == FieldStatus.Default || field.FieldStatus == FieldStatus.IgnoreValidation)
                         {
                             //Configure entry validation area
-                            Grid entryContainer = new ();
+                            //Label + validation components
+                            StackLayout fieldContainer = new();
+                            Grid.SetColumn(fieldContainer, Grid.GetColumn(field));
+                            
+                            Grid entryContainer = new();
 
+                            //entryContainer.Add(field.Label);
                             entryContainer.Add(field.Input);
                             entryContainer.Add(field.ErrorImage);
+                            
 
-                            BorderItem entryBorder = new() 
-                            { 
+                            BorderItem entryBorder = new()
+                            {
                                 ShapeCornerRadius = 5,
                                 Stroke = Color.Parse("Transparent")
                             };
+                            var row = field.IsCustomField ? Grid.GetRow(field) : index;
+                            Grid.SetRow(fieldContainer, row);
+                            
                             entryBorder.Content = entryContainer;
-                            mainLayout.Add(field.Label);
-                            //mainLayout.Add(field.Input);
-                            mainLayout.Add(entryBorder);
-                            mainLayout.Add(field.ErrorLabel);
+                            
+                            fieldContainer.Add(field.Label);
+                            fieldContainer.Add(entryBorder);
+                            fieldContainer.Add(field.ErrorLabel);
+                            mainLayout.Add(fieldContainer);
                         }
                     }
+
+                    mainLayout.RowDefinitions = RowDefinitions ?? new RowDefinitionCollection(rowDefinitions);
+                    mainLayout.ColumnDefinitions = ColumnDefinitions;
+                }
+                    
                 baseLayout.Add(mainLayout);
                 
                 ButtonsContainer.Add(SubmitButton);
                 
                 baseLayout.Add(ButtonsContainer);
-                //baseLayout.Add(PrevButton);
                 Content ??= baseLayout;
             }
         }
@@ -496,8 +552,8 @@ public partial class Form : ContentView, INotifyPropertyChanged
             titleLayout.Add(boxView);
             baseLayout.Add(titleLayout);
         }
-        
-        mainLayout = new() { Spacing = 5 };
+
+        mainLayout = new();// { Spacing = 5 };
         ConfigureFormFields();
     }
 
@@ -534,6 +590,7 @@ public partial class Form : ContentView, INotifyPropertyChanged
                 }
                 errorLabel.Text = sb.ToString();
                 ValidationSummary.Content = errorLabel;
+                Grid.SetRow(ValidationSummary, mainLayout.RowDefinitions.Count);
 
                 if (!mainLayout.Children.Any(l => l.GetType() == typeof(BorderItem)))
                     mainLayout.Add(ValidationSummary);
