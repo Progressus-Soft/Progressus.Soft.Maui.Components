@@ -1,4 +1,5 @@
-﻿using TestingApp.Flyout;
+﻿using Progressus.Soft.Maui.Components;
+using TestingApp.Flyout;
 
 namespace TestingApp
 {
@@ -18,6 +19,12 @@ namespace TestingApp
             Shell.Current.FlyoutContent = fly;
             Shell.Current.FlyoutIsPresented = true;
         }
-    }
+
+		private async void Button_Clicked_1(object sender, EventArgs e)
+		{
+            //AppShell.SetNavBarIsVisible(container, false);
+            await Alert.DisplayAlertAsync(Application.Current.MainPage?.Navigation, "From method", "Success alert from DisplayAlertAsync", AlertType.Information);
+		}
+	}
 
 }

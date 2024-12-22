@@ -9,6 +9,7 @@
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
+            <Button Text="Display alert" Clicked="Button_Clicked_1"/>
             <Image
                 Source="dotnet_bot.png"
                 HeightRequest="185"

@@ -1,38 +1,34 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<components:BorderItem xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:fa="clr-namespace:FontAwesome"
-             x:Class="Progressus.Soft.Maui.Components.Alert" x:Name="this">
-    <ContentView.Resources>
-        <ResourceDictionary>
-            
-        </ResourceDictionary>
-    </ContentView.Resources>
-    <Grid>
-        <Frame CornerRadius="5" 
-               HasShadow="False" 
-               Padding="0" 
-               BackgroundColor="{Binding Source={x:Reference this}, Path=Color}">
-            <Grid Padding="10" RowDefinitions="Auto,Auto,Auto">
-                <Label FontAttributes="Bold" Text="{Binding Source={x:Reference this}, Path=Title}" HorizontalOptions="CenterAndExpand" VerticalOptions="Start"/>
-                <Label Grid.Row="1" Text="{Binding Source={x:Reference this}, Path=Message}" VerticalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                <StackLayout Orientation="Horizontal" Grid.Row="2" Padding="10" Spacing="5">
-                    <Button IsVisible="{Binding Source={x:Reference this}, Path=DisplayRefreshButton}" 
-                         Command="{Binding Source={x:Reference this}, Path=RefreshCommand}"  
-                            BorderColor="Transparent" 
-                            Text="Reintentar" CornerRadius="5"
-                            BackgroundColor="#0dcaf0"
-                            HorizontalOptions="FillAndExpand"/>
-                    <Button HorizontalOptions="FillAndExpand" 
-                            CornerRadius="5" Text="Cerrar" 
-                            Command="{Binding Source={x:Reference this}, Path=ClosingCommand}"  
-                            BackgroundColor="Transparent" 
-                            BorderColor="#0dcaf0" 
-                            BorderWidth="1"
-                            IsVisible="{Binding Source={x:Reference this}, Path=Dismissible}"
-                            Clicked="CloseButton_Clicked"/>
-                </StackLayout>
-            </Grid>
-        </Frame>
+             xmlns:components="clr-namespace:Progressus.Soft.Maui.Components"
+             x:Class="Progressus.Soft.Maui.Components.Alert"
+             ShapeCornerRadius="5" Stroke="Transparent" Padding="0">
+    <Grid ColumnDefinitions="5,*">
+        <BoxView BackgroundColor="{Binding Source={x:Reference this}, Path=Color}" HorizontalOptions="FillAndExpand"/>
+        <Grid Grid.Column="1" ColumnDefinitions="5,15,*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="5" Padding="0,15,10,15">
+            <Image Grid.Column="1" Source="{Binding Source={x:Reference this}, Path=IconSource}" VerticalOptions="Center"/>
+            <Label Grid.Column="2" FontSize="12" FontAttributes="Bold" Text="{Binding Source={x:Reference this}, Path=Title}" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+            <Label Grid.Column="2" Grid.Row="1" Text="{Binding Source={x:Reference this}, Path=Message}" VerticalOptions="Start" HorizontalTextAlignment="Start" VerticalTextAlignment="Start"/>
+            <ImageButton MinimumHeightRequest="10" MinimumWidthRequest="10"
+                         WidthRequest="20" HeightRequest="20" Grid.Column="3"
+                         BackgroundColor="Transparent"
+                         Source="ic_highlight_off_white_18dp.png" 
+                         VerticalOptions="Center"
+                         HorizontalOptions="EndAndExpand"
+                         Command="{Binding Source={x:Reference this}, Path=ClosingCommand}" 
+                         IsVisible="{Binding Source={x:Reference this}, Path=Dismissible}"
+                         Clicked="CloseButton_Clicked"/>
+            <ImageButton MinimumHeightRequest="10" MinimumWidthRequest="10"
+                         WidthRequest="20" HeightRequest="20" Grid.Column="3"
+                         Grid.Row="1"
+                         BackgroundColor="Transparent"
+                         Source="ic_cached_white_18dp.png" 
+                         VerticalOptions="Center"
+                         HorizontalOptions="EndAndExpand"
+                         IsVisible="{Binding Source={x:Reference this}, Path=DisplayRefreshButton}" 
+                         Command="{Binding Source={x:Reference this}, Path=RefreshCommand}"/>
+        </Grid>
     </Grid>
-</ContentView>
+</components:BorderItem>

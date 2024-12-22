@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace Progressus.Soft.Maui.Components;
 
-public partial class Alert : ContentView, INotifyPropertyChanged
+public partial class Alert : BorderItem, INotifyPropertyChanged
 {
     public static readonly BindableProperty TitleProperty =
     BindableProperty.Create(
@@ -110,7 +110,14 @@ public partial class Alert : ContentView, INotifyPropertyChanged
         get { return _color; }
         private set { SetProperty(ref _color, value); }
     }
-    static void OnAlertTypeChanged(BindableObject bindable, object oldValue, object newValue)
+
+	string _source;
+	public string IconSource
+	{
+		get { return _source; }
+		private set { SetProperty(ref _source, value); }
+	}
+	static void OnAlertTypeChanged(BindableObject bindable, object oldValue, object newValue)
     {
         if (bindable != null && bindable is Alert && newValue != null && newValue is AlertType)
         {
@@ -118,16 +125,20 @@ public partial class Alert : ContentView, INotifyPropertyChanged
             {
                 case AlertType.Success:
                     (bindable as Alert)!.Color = Color.Parse("#198754");
+                    (bindable as Alert)!.IconSource = "ic_check_circle_white_48dp.png" ;
                     break;
                 case AlertType.Danger:
                     (bindable as Alert)!.Color = Color.Parse("#dc3545");
-                    break;
+					(bindable as Alert)!.IconSource = "ic_error_outline_white_48dp.png";
+					break;
                 case AlertType.Warning:
                     (bindable as Alert)!.Color = Color.Parse("#ffc107");
-                    break;
+					(bindable as Alert)!.IconSource = "ic_warning_white_48dp.png";
+					break;
                 case AlertType.Information:
                     (bindable as Alert)!.Color = Color.Parse("#0dcaf0");
-                    break;
+					(bindable as Alert)!.IconSource = "ic_info_outline_white_48dp.png";
+					break;
             }
         }
     }
@@ -156,13 +167,42 @@ public partial class Alert : ContentView, INotifyPropertyChanged
         DisplayRefreshButton = displayRefresh;
     }
 
-    private void CloseButton_Clicked(object sender, EventArgs e)
+    private async void CloseButton_Clicked(object sender, EventArgs e)
     {
-        if((sender as Button).Command == null)
+        if((sender as ImageButton).Command == null)
         {
-            IsVisible = false;
+            var parent = Parent;
+            //Find out if alert is a child of a modal content page (displayed as modal)
+            if(parent is not null && parent is ContentPage && (parent as ContentPage)!.Navigation.ModalStack.Any(l => l.Id == parent.Id))
+            {
+				await (parent as ContentPage)!.Navigation.PopModalAsync();
+			}else
+                IsVisible = false;
         }
     }
+
+    public static async Task DisplayAlertAsync(INavigation navigation, string title, string message, 
+        AlertType alertType = AlertType.Success, 
+        Color? overlayColor = null,
+		ContentPage? layout = null)
+    {
+        if(navigation is null) throw new ArgumentNullException(nameof(navigation));
+
+        //Configure layout
+		ContentPage container = layout ?? new ();
+        container.BackgroundColor = overlayColor ?? Color.Parse("#6E6E6EAA");
+        
+        Alert alert = new()
+		{
+			Title = title,
+			Message = message,
+			AlertType = alertType,
+			VerticalOptions = LayoutOptions.Center,
+			HorizontalOptions = LayoutOptions.CenterAndExpand,
+        };
+		container.Content = alert;
+		await navigation.PushModalAsync(container);
+	}
 }
 
 public enum AlertType
