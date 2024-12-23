@@ -175,14 +175,29 @@ public partial class Alert : BorderItem, INotifyPropertyChanged
             //Find out if alert is a child of a modal content page (displayed as modal)
             if(parent is not null && parent is ContentPage && (parent as ContentPage)!.Navigation.ModalStack.Any(l => l.Id == parent.Id))
             {
-				await (parent as ContentPage)!.Navigation.PopModalAsync();
+				await (parent as ContentPage)!.Navigation.PopModalAsync(false);
 			}else
                 IsVisible = false;
         }
     }
 
-    public static async Task DisplayAlertAsync(INavigation navigation, string title, string message, 
+	/// <summary>
+	/// Display alert as a modal window
+	/// </summary>
+	/// <param name="navigation">Navigation Stack</param>
+	/// <param name="title">Alert Title</param>
+	/// <param name="message">Alert Message</param>
+	/// <param name="alertType">Alert Type</param>
+	/// <param name="verticalOptions">Vertical Options</param>
+	/// <param name="horizontalOptions">Horizontal Options</param>
+	/// <param name="overlayColor">Alert Background color</param>
+	/// <param name="layout">Custom content page to show alert inside</param>
+	/// <returns>A task representing the current operation</returns>
+	/// <exception cref="ArgumentNullException"></exception>
+	public static async Task DisplayAlertAsync(INavigation navigation, string title, string message, 
         AlertType alertType = AlertType.Success, 
+        LayoutOptions? verticalOptions = null,
+        LayoutOptions? horizontalOptions = null,
         Color? overlayColor = null,
 		ContentPage? layout = null)
     {
@@ -190,18 +205,41 @@ public partial class Alert : BorderItem, INotifyPropertyChanged
 
         //Configure layout
 		ContentPage container = layout ?? new ();
-        container.BackgroundColor = overlayColor ?? Color.Parse("#6E6E6EAA");
+        container.BackgroundColor = overlayColor ?? Color.Parse("Transparent");
         
         Alert alert = new()
 		{
 			Title = title,
 			Message = message,
 			AlertType = alertType,
-			VerticalOptions = LayoutOptions.Center,
-			HorizontalOptions = LayoutOptions.CenterAndExpand,
+			VerticalOptions = verticalOptions ?? LayoutOptions.Center,
+			HorizontalOptions = horizontalOptions ?? LayoutOptions.Center,
         };
-		container.Content = alert;
-		await navigation.PushModalAsync(container);
+        container.Content = alert;
+		await navigation.PushModalAsync(container, false);
+	}
+
+    /// <summary>
+    /// Display alert as a modal window
+    /// </summary>
+    /// <param name="navigation">Navigation Stack</param>
+    /// <param name="instance">Alert instance</param>
+    /// <param name="overlayColor">Alert Background color</param>
+    /// <param name="layout">Custom content page to show alert inside</param>
+    /// <returns>A task representing the current operation</returns>
+    /// <exception cref="ArgumentNullException"></exception>
+	public static async Task DisplayAlertAsync(INavigation navigation, Alert instance,
+		Color? overlayColor = null,
+		ContentPage? layout = null)
+	{
+		if (navigation is null) throw new ArgumentNullException(nameof(navigation));
+		if (instance is null) throw new ArgumentNullException(nameof(instance));
+
+		//Configure layout
+		ContentPage container = layout ?? new();
+		container.BackgroundColor = overlayColor ?? Color.Parse("Transparent");
+        container.Content = instance;
+		await navigation.PushModalAsync(container, false);
 	}
 }
 

@@ -74,10 +74,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Extensions\" />
 	  <Folder Include="Resources\Fonts\" />
 	</ItemGroup>
-
+  
 	<ItemGroup>
 	  <None Include="README.md">
 	    <Pack>True</Pack>
