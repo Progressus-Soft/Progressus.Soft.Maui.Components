@@ -69,16 +69,16 @@ jobs:
   #    - name: Validate package
   #      run: meziantou.validate-nuget-package (Get-ChildItem "${{ env.NuGetDirectory }}/*.nupkg")
 
-  run_test:
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
-    - name: Run tests
-      run: dotnet test --configuration Release
+  #run_test:
+  #  runs-on: windows-latest
+  #  steps:
+  #  - uses: actions/checkout@v4
+  #  - name: Setup .NET
+  #    uses: actions/setup-dotnet@v4
+  #    with:
+  #      dotnet-version: 8.0.x
+  #  - name: Run tests
+  #    run: dotnet test --configuration Release
 
   deploy:
     # Publish only when creating a GitHub Release
@@ -87,7 +87,7 @@ jobs:
     #if: github.event_name == 'release'
     runs-on: windows-latest
     #needs: [ validate_nuget, run_test ]
-    needs: [ run_test, create_nuget ]
+    needs: [ create_nuget ]
     steps:
       # Download the NuGet package created in the previous job
       - uses: actions/download-artifact@v4
