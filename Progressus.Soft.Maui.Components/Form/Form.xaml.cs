@@ -537,22 +537,26 @@ public partial class Form : ContentView, INotifyPropertyChanged
             Debug.WriteLine(e.StackTrace);
         }
     }
+
+    protected void SetTitle()
+    {
+		//Set title
+		if (!string.IsNullOrEmpty(Title))
+		{
+			Label title = new();
+			title.SetBinding(Label.TextProperty, new Binding(nameof(Title), source: this));
+			BoxView boxView = new BoxView() { HeightRequest = 1, BackgroundColor = Color.Parse("#6E6E6E") };
+			VerticalStackLayout titleLayout = new VerticalStackLayout();
+			titleLayout.Add(title);
+			titleLayout.Add(boxView);
+			baseLayout.Add(titleLayout);
+		}
+	}
     private void ContentView_Loaded(object sender, EventArgs e)
     {
         baseLayout = new() { Spacing = 5 };
-        
-        //Set title
-        if (!string.IsNullOrEmpty(Title))
-        {
-            Label title = new();
-            title.SetBinding(Label.TextProperty, new Binding(nameof(Title), source: this));
-            BoxView boxView = new BoxView() { HeightRequest = 1, BackgroundColor = Color.Parse("#6E6E6E") };
-            VerticalStackLayout titleLayout = new VerticalStackLayout();
-            titleLayout.Add(title);
-            titleLayout.Add(boxView);
-            baseLayout.Add(titleLayout);
-        }
 
+        SetTitle();
         mainLayout = new();// { Spacing = 5 };
         ConfigureFormFields();
     }
