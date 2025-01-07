@@ -36,7 +36,7 @@ jobs:
       uses: actions/setup-dotnet@v4
 
     # Create the NuGet package in the folder from the environment variable NuGetDirectory
-    - run: dotnet pack --configuration Release --output ${{ env.NuGetDirectory }} ${{ env.PROJECT_PATH }}
+    - run: dotnet pack --configuration Release --output ${{ env.NuGetDirectory }} Progressus.Soft.Maui.Components\Progressus.Soft.Maui.Components.csproj
 
     # Publish the NuGet package as an artifact, so they can be used in the following jobs
     - uses: actions/upload-artifact@v4
