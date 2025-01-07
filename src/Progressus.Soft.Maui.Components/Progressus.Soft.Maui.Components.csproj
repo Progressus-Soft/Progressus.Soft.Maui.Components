@@ -36,7 +36,8 @@
     <PackageTags>.Net Maui;Component;Border;MAUI Components</PackageTags>
     <!-- Package validation -->
     <EnablePackageValidation>true</EnablePackageValidation>
-    <PackageVersion>1.2.0</PackageVersion>
+    <PackageVersion>1.2.5</PackageVersion>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
   
 	<ItemGroup>
@@ -50,7 +51,7 @@
   
   <ItemGroup>
     <!-- Images -->
-    <MauiImage Include="$(MSBuildThisFileDirectory)\Resources\Images\*" Pack="True" />
+    <MauiImage Include="Resources\Images\*" Pack="True" />
     <!-- Custom Fonts -->
     <MauiFont Include="Resources\Fonts\*" />
 
@@ -89,10 +90,6 @@
 	    <PackagePath>\</PackagePath>
 	  </None>
 	</ItemGroup>
-  
-	<ItemGroup>
-	  <ProjectReference Include="..\Progressus.Soft.Maui.Components.Core\Progressus.Soft.Maui.Components.Core.csproj" />
-	</ItemGroup>
 
 	<ItemGroup>
 	  <Compile Update="CustomIndicator\BorderedActivityIndicator.xaml.cs">
@@ -102,5 +99,5 @@
 	    <DependentUpon>BorderedImage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
-
+  <Import Project="..\..\PackMauiAssets.targets" />
 </Project>
