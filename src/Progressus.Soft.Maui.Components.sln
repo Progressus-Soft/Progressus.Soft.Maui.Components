@@ -9,9 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		..\.editorconfig = ..\.editorconfig
 		..\Directory.Build.props = ..\Directory.Build.props
+		..\Directory.Build.targets = ..\Directory.Build.targets
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Progressus.Soft.Maui.Components.Core", "Progressus.Soft.Maui.Components.Core\Progressus.Soft.Maui.Components.Core.csproj", "{074FC333-B3A4-4462-B9F8-394450F4F11B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +22,6 @@ Global
 		{28AC26AF-2074-40F6-9740-971FFC6F7DDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28AC26AF-2074-40F6-9740-971FFC6F7DDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28AC26AF-2074-40F6-9740-971FFC6F7DDF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{074FC333-B3A4-4462-B9F8-394450F4F11B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{074FC333-B3A4-4462-B9F8-394450F4F11B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{074FC333-B3A4-4462-B9F8-394450F4F11B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{074FC333-B3A4-4462-B9F8-394450F4F11B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
