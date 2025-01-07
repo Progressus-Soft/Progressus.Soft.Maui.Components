@@ -37,7 +37,7 @@
     <!-- Package validation -->
     <EnablePackageValidation>true</EnablePackageValidation>
     <PackageVersion>1.2.5</PackageVersion>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
   </PropertyGroup>
   
 	<ItemGroup>
