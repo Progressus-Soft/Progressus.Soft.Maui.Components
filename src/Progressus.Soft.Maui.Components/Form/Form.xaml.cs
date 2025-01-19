@@ -538,7 +538,7 @@ public partial class Form : ContentView, INotifyPropertyChanged
         }
     }
 
-    protected void SetTitle()
+    protected virtual void SetTitle()
     {
 		//Set title
 		if (!string.IsNullOrEmpty(Title))

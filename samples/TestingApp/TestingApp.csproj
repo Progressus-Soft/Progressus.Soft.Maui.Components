@@ -60,7 +60,13 @@
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.72" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.72" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
-		<PackageReference Include="Progressus.Soft.Maui.Components" Version="1.2.5" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="Progressus.Soft.Maui.Components">
+	    <HintPath>..\..\src\Progressus.Soft.Maui.Components\bin\Debug\net8.0\Progressus.Soft.Maui.Components.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
 
 	<ItemGroup>

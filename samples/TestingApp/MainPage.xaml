@@ -60,7 +60,7 @@
             <components:BorderItem Padding="10" ShapeCornerRadius="5">
                 <components:MultiStepForm>
                     <components:MultiStepForm.Steps>
-                        <components:FormStep Title="Step 1" RequireSuccessSubmitted="False" SourceType="{x:Type models:FormModel}" 
+                        <components:FormStep ImageSource="dotnet_bot.png" DisplayTitle="True"  RequireSuccessSubmitted="False" SourceType="{x:Type models:FormModel}" 
                                              DisplayLabels="True" DisplayPlaceholders="True" ButtonText="Next"
                                              DisplayValidationSummary="True" />
                         <components:FormStep Title="Step 2" SourceType="{x:Type models:SecondFormModel}" 
